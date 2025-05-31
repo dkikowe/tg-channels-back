@@ -5,7 +5,11 @@
     "domain": ".telemetr.me",
     "path": "/",
     "httpOnly": false,
-    "secure": true
+    "secure": true,
+    "expires": "2026-05-13T13:49:36.000Z",
+    "size": 15,
+    "sameSite": "None",
+    "priority": "Medium"
   },
   {
     "name": "_ym_isad",
@@ -13,7 +17,11 @@
     "domain": ".telemetr.me",
     "path": "/",
     "httpOnly": false,
-    "secure": true
+    "secure": true,
+    "expires": "2025-06-01T09:13:39.000Z",
+    "size": 9,
+    "sameSite": "None",
+    "priority": "Medium"
   },
   {
     "name": "_ym_uid",
@@ -21,7 +29,11 @@
     "domain": ".telemetr.me",
     "path": "/",
     "httpOnly": false,
-    "secure": true
+    "secure": true,
+    "expires": "2026-05-13T13:49:36.000Z",
+    "size": 26,
+    "sameSite": "None",
+    "priority": "Medium"
   },
   {
     "name": "_ym_visorc",
@@ -29,23 +41,35 @@
     "domain": ".telemetr.me",
     "path": "/",
     "httpOnly": false,
-    "secure": true
+    "secure": true,
+    "expires": "2025-05-31T13:43:39.000Z",
+    "size": 11,
+    "sameSite": "None",
+    "priority": "Medium"
   },
   {
     "name": "cf_clearance",
-    "value": "YFCh1d.RsYvLLCBoVun8dPMzbpQN4ROrv7KqYRypdvQ-1748036391-1.2.1.1-ecI.Cy4uLWdhw_baDmzokjD7jr5_eynoQ40l6gnNIg5acYWk4Q4k40Myv4zceC7Enkj_Yv3iR_rsf.A3tStnvY7ouqbCuATZ2NDVuXgvb6prqB9f69mareAR3GeVOFZcSHxduUY4DUDqn4hRtYOxD.CIi51z8HkZy8kxPlcAuDajGB9upTjkM_VQxJrkVafWOLkw_Y2DI4pWxtKa.QvAaNJX4tz7bD55aPueMFv6FtlJ1MkTM5grKCx3hlO9crKkV95XtFD07qts0Islw6mffjBMIpaWiWCvPKUWW1vvfEo2kYank2PJmoz7Pzo8DSoJkxGWZm6uCwPqv3kzMMOaoIBvb8OMYq5xxENP.yPDVFA",
+    "value": "3o8vp8XbY8OB8bfCnEI9S8oqlPO.m0ExmiNkCwEYVpQ-1748697220-1.2.1.1-y6fcA2icz6zo0nKqcbh6u9qsORMYIRfGHYpOx_megrAJ76sVI2vkqh2sAl5U4FPKAoKRLZhSC_2F_TYtE1kZ3iRpGwOOrDTQsWENkzl2ckM1vRkIPCl4xUYVUXB2pSCaKg4CLBHmrkDJq6DNusc_.MWOYISsLpg9hIUbghPyfcrVHyHoQFUFAaGxEHnHzaHAHZGdIZw8MyTgsklsZVoMJHGwYDhfSm8NJFW8.pz5LGnrAoIYH8c8zHi7lwGHrH.i9FW0BOWlvtWrVg_dSqa2pFYMncs6InTV8UghBIH0KlmDK6nqG2rLTsw8iNiRSASy9DI.ZshkCFHJXswHl4nsPQhVTWSbnWVvMyNJhOgfeyI",
     "domain": ".telemetr.me",
     "path": "/",
     "httpOnly": true,
-    "secure": true
+    "secure": true,
+    "expires": "2026-05-31T13:13:39.958Z",
+    "size": 438,
+    "sameSite": "None",
+    "priority": "Medium",
+    "origin": "https://telemetr.me"
   },
   {
     "name": "PHPSESSID",
-    "value": "k29kg36d8ri0slv4brsv8vf42l",
+    "value": "cj5va1vgkhdm75npdtq3adfn4m",
     "domain": ".telemetr.me",
     "path": "/",
     "httpOnly": true,
-    "secure": true
+    "secure": true,
+    "expires": "2026-05-29T10:43:31.922Z",
+    "size": 35,
+    "priority": "Medium"
   },
   {
     "name": "reflink",
@@ -53,6 +77,9 @@
     "domain": ".telemetr.me",
     "path": "/",
     "httpOnly": false,
-    "secure": true
+    "secure": true,
+    "expires": "2025-06-12T14:40:37.586Z",
+    "size": 14,
+    "priority": "Medium"
   }
 ]
