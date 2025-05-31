@@ -22,6 +22,7 @@ async function parseCategory(categorySlug) {
     categorySlug
   )}`;
 
+  // Запускаем один браузер на весь вызов
   const browser = await puppeteer.launch({
     headless: "new",
     args: [
@@ -31,12 +32,13 @@ async function parseCategory(categorySlug) {
       "--disable-accelerated-2d-canvas",
       "--no-zygote",
       "--single-process",
+      "--disable-gpu",
     ],
   });
 
   const page = await browser.newPage();
 
-  // Попытка загрузить cookies и установить User-Agent
+  // Загружаем cookies и устанавливаем User-Agent
   try {
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
@@ -49,10 +51,12 @@ async function parseCategory(categorySlug) {
       await page.setCookie(...cookies);
     }
   } catch {
-    console.warn("⚠ Не удалось загрузить cookies.json или установить UA");
+    console.warn(
+      "⚠ Не удалось загрузить cookies.json или установить User-Agent"
+    );
   }
 
-  // Блокируем все картинки, кроме аватарок
+  // Блокируем все картинки кроме аватарок
   await page.setRequestInterception(true);
   page.on("request", (req) => {
     if (req.resourceType() === "image") {
@@ -66,7 +70,7 @@ async function parseCategory(categorySlug) {
     }
   });
 
-  // Переходим сначала на главную для применения cookies, затем на категорию
+  // Переходим на главную для применения cookies, потом на страницу категории
   await page.goto("https://telemetr.me", {
     waitUntil: "networkidle2",
     timeout: 120000,
@@ -76,16 +80,16 @@ async function parseCategory(categorySlug) {
     timeout: 120000,
   });
 
-  // Проверяем, не перенаправились ли на страницу логина
+  // Проверяем наличие формы логина (авторизация)
   if (await page.$("form[action*='login']")) {
     await browser.close();
     throw new Error("Вы не авторизованы — обновите cookies.json");
   }
 
-  // Ждём появления хотя бы одной строки в таблице
+  // Ждём появления строк таблицы
   await page.waitForSelector("tbody tr", { timeout: 30000 });
 
-  // Парсим данные в контексте страницы
+  // Парсим данные из таблицы
   const channels = await page.evaluate(() => {
     const rows = Array.from(document.querySelectorAll("tbody tr"));
     const out = [];
@@ -95,7 +99,6 @@ async function parseCategory(categorySlug) {
       const titleEl = tr.querySelector("td.wd-300 a.kt-ch-title");
       if (!titleEl) continue;
 
-      // Основные поля
       const avatarEl = tr.querySelector("img.c-avatar");
       const avatar = avatarEl ? avatarEl.src : null;
 
@@ -119,7 +122,6 @@ async function parseCategory(categorySlug) {
         description = div.textContent.trim();
       }
 
-      // Формируем объект канала
       const channel = {
         title: titleEl.textContent.trim(),
         avatar,
