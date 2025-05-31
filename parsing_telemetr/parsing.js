@@ -27,22 +27,23 @@ async function parseCategory(categorySlug) {
       "--no-sandbox",
       "--disable-setuid-sandbox",
       "--disable-dev-shm-usage",
-      "--single-process",
+      "--disable-accelerated-2d-canvas",
+      "--no-zygote",
     ],
   });
   const page = await browser.newPage();
 
   // Попытка загрузить cookies и установить User-Agent
   try {
-    const cookies = JSON.parse(fs.readFileSync("cookies.json", "utf8"));
-    if (Array.isArray(cookies)) {
-      await page.setCookie(...cookies);
-    }
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
         "AppleWebKit/537.36 (KHTML, like Gecko) " +
         "Chrome/122.0.0.0 Safari/537.36"
     );
+    const cookies = JSON.parse(fs.readFileSync("cookies.json", "utf8"));
+    if (Array.isArray(cookies)) {
+      await page.setCookie(...cookies);
+    }
   } catch {
     console.warn("⚠ Не удалось загрузить cookies.json или установить UA");
   }
@@ -64,11 +65,11 @@ async function parseCategory(categorySlug) {
   // Делаем переходы: сначала главная для применения cookies, затем категория
   await page.goto("https://telemetr.me", {
     waitUntil: "networkidle2",
-    timeout: 60000,
+    timeout: 120000,
   });
   await page.goto(categoryUrl, {
     waitUntil: "networkidle2",
-    timeout: 60000,
+    timeout: 120000,
   });
 
   // Проверяем, не перевели ли нас на страницу логина
