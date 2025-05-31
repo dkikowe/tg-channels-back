@@ -21,6 +21,7 @@ async function parseCategory(categorySlug) {
   const categoryUrl = `https://telemetr.me/channels/cat/${encodeURIComponent(
     categorySlug
   )}`;
+
   const browser = await puppeteer.launch({
     headless: "new",
     args: [
@@ -32,6 +33,7 @@ async function parseCategory(categorySlug) {
       "--single-process",
     ],
   });
+
   const page = await browser.newPage();
 
   // Попытка загрузить cookies и установить User-Agent
@@ -41,6 +43,7 @@ async function parseCategory(categorySlug) {
         "AppleWebKit/537.36 (KHTML, like Gecko) " +
         "Chrome/122.0.0.0 Safari/537.36"
     );
+
     const cookies = JSON.parse(fs.readFileSync("cookies.json", "utf8"));
     if (Array.isArray(cookies)) {
       await page.setCookie(...cookies);
@@ -63,7 +66,7 @@ async function parseCategory(categorySlug) {
     }
   });
 
-  // Делаем переходы: сначала главная для применения cookies, затем категория
+  // Переходим сначала на главную для применения cookies, затем на категорию
   await page.goto("https://telemetr.me", {
     waitUntil: "networkidle2",
     timeout: 120000,
@@ -73,7 +76,7 @@ async function parseCategory(categorySlug) {
     timeout: 120000,
   });
 
-  // Проверяем, не перевели ли нас на страницу логина
+  // Проверяем, не перенаправились ли на страницу логина
   if (await page.$("form[action*='login']")) {
     await browser.close();
     throw new Error("Вы не авторизованы — обновите cookies.json");
@@ -82,7 +85,7 @@ async function parseCategory(categorySlug) {
   // Ждём появления хотя бы одной строки в таблице
   await page.waitForSelector("tbody tr", { timeout: 30000 });
 
-  // Выполняем парсинг прямо в контексте страницы
+  // Парсим данные в контексте страницы
   const channels = await page.evaluate(() => {
     const rows = Array.from(document.querySelectorAll("tbody tr"));
     const out = [];
@@ -92,7 +95,7 @@ async function parseCategory(categorySlug) {
       const titleEl = tr.querySelector("td.wd-300 a.kt-ch-title");
       if (!titleEl) continue;
 
-      // Собираем основные поля
+      // Основные поля
       const avatarEl = tr.querySelector("img.c-avatar");
       const avatar = avatarEl ? avatarEl.src : null;
 
@@ -116,7 +119,7 @@ async function parseCategory(categorySlug) {
         description = div.textContent.trim();
       }
 
-      // Готовим сущность канала
+      // Формируем объект канала
       const channel = {
         title: titleEl.textContent.trim(),
         avatar,
