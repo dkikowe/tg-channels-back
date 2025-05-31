@@ -79,7 +79,7 @@
     "httpOnly": false,
     "secure": true,
     "expires": "2025-06-12T14:40:37.586Z",
-    "size": 14,
-    "priority": "Medium"
+    "size": 14
+
   }
 ]
